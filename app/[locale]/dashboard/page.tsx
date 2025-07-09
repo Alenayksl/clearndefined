@@ -3,10 +3,12 @@
 import { useAuth } from '@/app/hooks/useAuth'
 import { removeTokens } from '@/app/utils/cookies'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 export default function DashboardPage() {
   const { user, logout } = useAuth()
   const router = useRouter()
+  const t = useTranslations('dashboard')
 
   const handleLogout = () => {
     removeTokens()
@@ -27,23 +29,23 @@ export default function DashboardPage() {
   }
 
   if (!user) {
-    return <p>Yükleniyor...</p>
+    return <p>{t('loading')}</p>
   }
 
   return (
     <div style={{ padding: '2rem' }}>
-      <h1>🏡 Hoşgeldin, {user.name}!</h1>
-      <p><strong>Email:</strong> {user.email}</p>
-      <p><strong>Rol:</strong> {user.role}</p>
+      <h1>🏡 {t('welcome', { name: user.name })}</h1>
+      <p><strong>{t('email')}:</strong> {user.email}</p>
+      <p><strong>{t('role')}:</strong> {user.role}</p>
 
       <br />
-      <button onClick={handleLogout}>Çıkış Yap</button>
+      <button className='btn btn-primary' onClick={handleLogout}>{t('logout')}</button>
       <br /><br />
-      <button onClick={goToReserve}>📅 Rezervasyon Yap</button>
+      <button onClick={goToReserve}>📅 {t('goToReserve')}</button>
       <br /><br />
-      <button onClick={goToReservations}>📖 Rezervasyonlarımı Gör</button>
+      <button onClick={goToReservations}>📖 {t('goToReservations')}</button>
       <br /><br />
-      <button onClick={goToProfile}>👤 Profil Bilgilerimi Güncelle</button>
+      <button onClick={goToProfile}>👤 {t('goToProfile')}</button>
     </div>
   )
 }

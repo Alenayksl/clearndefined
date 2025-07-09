@@ -50,6 +50,7 @@ export const useAuth = () => {
       clearUser()
       removeTokens() // Çıkışta da temizle tatlım
     },
+     token: getAccessToken(),
   }
 }
 

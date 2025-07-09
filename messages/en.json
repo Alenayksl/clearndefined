@@ -19,7 +19,17 @@
     "button": "Register",
     "loading": "Registering...",
     "error": "Registration failed"
-  }
+  },
+  "dashboard": {
+  "welcome": "Welcome, {name}!",
+  "email": "Email",
+  "role": "Role",
+  "logout": "Log Out",
+  "goToReserve": "Make a Reservation",
+  "goToReservations": "View My Reservations",
+  "goToProfile": "Update My Profile",
+  "loading": "Loading..."
+}
 }
 
 

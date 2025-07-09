@@ -12,11 +12,11 @@ export const usePaginatedReservations = (userId: number, page = 1, limit = 5) =>
         Authorization: `Bearer ${token}`,
       },
     })
-    return res.data.reservations // ✨ sadece reservations dizisini döndürüyoruz
+    return res.data.results // ✨ sadece reservations dizisini döndürüyoruz
   }
 
   const { data, error, isLoading } = useSWR(
-    userId ? `${API_ENDPOINTS.RESERVATIONS}?page=${page}&limit=2` : null,
+    userId ? `${API_ENDPOINTS.RESERVATIONS}/?page=${page}&limit=${limit}` : null,
     fetcher
   )
 

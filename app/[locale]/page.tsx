@@ -2,6 +2,8 @@
 
 import { useRouter, useParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
+import Button from '../components/Button';
+
 
 export default function HomePage() {
   const router = useRouter()
@@ -35,6 +37,8 @@ export default function HomePage() {
 
       {/* 🏡 Ana İçerik */}
       <h1 className="text-3xl font-bold mb-4 text-pink-600">{t('title')}</h1>
+       <h1>Next.js 15 ve Sass ile Merhaba Aşkım! 💖</h1>
+      <Button label="Tıkla Beni" />
       <p className="text-gray-700 mb-8">
         {currentLocale === 'tr'
           ? 'Lütfen giriş yapın ya da kayıt olun, balım 💅'

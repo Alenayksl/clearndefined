@@ -11,7 +11,7 @@ export function middleware(request: NextRequest) {
 
   const token = request.cookies.get('accessToken') || request.cookies.get('token')
 
-  const protectedPaths = ['/reserve', '/reservegor']
+  const protectedPaths = ['/reserve', '/reservegor','/profile']
   const isProtected = protectedPaths.some(path =>
     request.nextUrl.pathname.startsWith(path)
   )
@@ -24,5 +24,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/reserve/:path*', '/reservegor/:path*', '/((?!api|_next|.*\\..*).*)']
+  matcher: ['/reserve/:path*', '/reservegor/:path*','/profile/:path*','/((?!api|_next|.*\\..*).*)']
 }

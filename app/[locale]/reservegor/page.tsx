@@ -4,14 +4,15 @@ import { useAuth } from '@/app/hooks/useAuth'
 import { usePaginatedReservations } from '@/app/hooks/usePaginatedReservations'
 import { useReservationActions } from '@/app/hooks/useReservationActions'
 import { useState } from 'react'
+import { useRouter } from 'next/navigation' // ✨ Yönlendirme için ekledik aşkım
 
 export default function MyReservationsPage() {
   const { user, loading } = useAuth()
   const [page, setPage] = useState(1)
   const { reservations, isLoading, isError } = usePaginatedReservations(user?.id || 0, page, 5)
   const { updateReservation, deleteReservation } = useReservationActions()
-
   const [form, setForm] = useState<{ [id: number]: { start: string; end: string } }>({})
+  const router = useRouter()
 
   const handleChange = (id: number, field: 'start' | 'end', value: string) => {
     setForm((prev) => ({
@@ -29,7 +30,7 @@ export default function MyReservationsPage() {
     try {
       await updateReservation(id, start, end)
       alert('Güncellendi 🎉')
-      location.reload() // İstersen SWR mutate() ile daha zarif çözebilirim
+      location.reload()
     } catch {
       alert('Güncelleme başarısız 😢')
     }
@@ -111,6 +112,15 @@ export default function MyReservationsPage() {
           className="bg-gray-300 px-3 py-1 rounded hover:bg-gray-400"
         >
           Sonraki ➡️
+        </button>
+      </div>
+
+      <div className="mt-8">
+        <button
+          onClick={() => router.push('/dashboard')}
+          className="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600"
+        >
+          ⬅️ Anasayfaya Dön
         </button>
       </div>
     </div>

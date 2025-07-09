@@ -20,5 +20,15 @@
     "button": "Kayıt Ol",
     "loading": "Kayıt yapılıyor...",
     "error": "Kayıt yapılamadı"
+  },
+  "dashboard": {
+  "welcome": "Hoşgeldin, {name}!",
+  "email": "Email",
+  "role": "Rol",
+  "logout": "Çıkış Yap",
+  "goToReserve": "Rezervasyon Yap",
+  "goToReservations": "Rezervasyonlarımı Gör",
+  "goToProfile": "Profil Bilgilerimi Güncelle",
+  "loading": "Yükleniyor..."
   }
 }
