@@ -1,7 +1,39 @@
-import type { NextConfig } from "next";
+import { NextConfig } from 'next'
+import createNextIntlPlugin from 'next-intl/plugin'
 
 const nextConfig: NextConfig = {
-  /* config options here */
-};
+  sassOptions: {
+    implementation: 'sass-embedded',
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.pexels.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'a0.muscache.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.gstatic.com',
+        port: '',
+        pathname: '/**',
+      },
+    ],
+  },
+}
 
-export default nextConfig;
+const withNextIntl = createNextIntlPlugin()
+export default withNextIntl(nextConfig)

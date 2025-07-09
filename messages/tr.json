@@ -1,0 +1,24 @@
+{
+  "login": {
+    "title": "Giriş Yap",
+    "email": "E-posta",
+    "password": "Şifre",
+    "button": "Giriş Yap",
+    "loading": "Giriş Yapılıyor...",
+    "error": "Giriş yapılamadı"
+    
+  }
+  ,
+  "register": {
+    "title": "Kayıt Ol",
+    "name": "Ad",
+    "lastname": "Soyad",
+    "email": "E-posta",
+    "password": "Şifre",
+    "phone": "Telefon",
+    "image": "Fotoğraf URL (opsiyonel)",
+    "button": "Kayıt Ol",
+    "loading": "Kayıt yapılıyor...",
+    "error": "Kayıt yapılamadı"
+  }
+}

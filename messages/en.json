@@ -1,0 +1,27 @@
+{
+  "login": {
+    "title": "Login",
+    "email": "Email",
+    "password": "Password",
+    "button": "Login",
+    "loading": "Logging in...",
+    "error": "Login failed"
+  },
+
+  "register": {
+    "title": "Register",
+    "name": "First Name",
+    "lastname": "Last Name",
+    "email": "Email",
+    "password": "Password",
+    "phone": "Phone",
+    "image": "Image URL (optional)",
+    "button": "Register",
+    "loading": "Registering...",
+    "error": "Registration failed"
+  }
+}
+
+
+
+
