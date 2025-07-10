@@ -2,7 +2,7 @@
 
 import { useRouter, useParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
-import Button from '../components/Button';
+import MyButton from '../components/MyButton';
 
 
 export default function HomePage() {
@@ -18,46 +18,57 @@ export default function HomePage() {
   }
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen bg-gray-100 px-4">
-      {/* 🌐 Dil Seçimi */}
+    <main className="flex flex-col items-center justify-center min-h-screen">
+    <div className="absolute top-0 left-5">
+              <a href="#" className="-m-1.5 p-1.5">
+                <span className="sr-only">Your Company</span>
+                <img
+                  alt=""
+                  src="/images/books.png"
+                  className="h-8 w-auto"
+                />
+              </a>
+      </div>
+
       <div className="absolute top-4 right-4 flex gap-2">
+        <div className="flex gap-2">
+        <MyButton
+          onClick={() => router.push(`/${currentLocale}/login`)}
+        >
+          {t('button')}
+        </MyButton>
+        <MyButton
+          onClick={() => router.push(`/${currentLocale}/register`)}
+        >
+          {currentLocale === 'tr' ? 'Kayıt Ol' : 'Register'}
+        </MyButton>
+      </div>
         <button
           onClick={() => switchLocale('tr')}
-          className={`px-3 py-1 rounded ${currentLocale === 'tr' ? 'bg-pink-500 text-white' : 'bg-white text-pink-500 border border-pink-500'}`}
+          className={`px-3 py-1 rounded shadow-md font-extralight ${currentLocale === 'tr' ? 'bg-cyan-800 text-white' : 'bg-white text-cyan-800'}`}
         >
           TR
         </button>
         <button
           onClick={() => switchLocale('en')}
-          className={`px-3 py-1 rounded ${currentLocale === 'en' ? 'bg-purple-600 text-white' : 'bg-white text-purple-600 border border-purple-600'}`}
+          className={`px-3 py-1 rounded shadow-md font-extralight ${currentLocale === 'en' ? 'bg-cyan-800 text-white' : 'bg-white text-cyan-800'}`}
         >
           EN
         </button>
       </div>
-
-      {/* 🏡 Ana İçerik */}
-      <h1 className="text-3xl font-bold mb-4 text-pink-600">{t('title')}</h1>
-       <h1>Next.js 15 ve Sass ile Merhaba Aşkım! 💖</h1>
-      <Button label="Tıkla Beni" />
-      <p className="text-gray-700 mb-8">
+      
+      <p className="text-gray-700 mb-8 absolute top-5 right-72">
         {currentLocale === 'tr'
-          ? 'Lütfen giriş yapın ya da kayıt olun, balım 💅'
-          : 'Please login or register, babe 💅'}
+          ? 'Lütfen giriş yapın ya da kayıt olun |'
+          : 'Please login or register |'}
       </p>
-      <div className="flex gap-4">
-        <button
-          onClick={() => router.push(`/${currentLocale}/login`)}
-          className="px-6 py-2 bg-pink-500 text-white rounded-xl hover:bg-pink-600 transition"
-        >
-          {t('button')}
-        </button>
-        <button
-          onClick={() => router.push(`/${currentLocale}/register`)}
-          className="px-6 py-2 bg-purple-500 text-white rounded-xl hover:bg-purple-600 transition"
-        >
-          {currentLocale === 'tr' ? 'Kayıt Ol' : 'Register'}
-        </button>
-      </div>
+     <h1 className='text-4xl absolute left-35 top-25 text-cyan-800 font-extralight'>{currentLocale === 'tr'
+      ? 'KÜTÜPHANE'
+      : 'LIBRARY'
+      }</h1>
+      <p className='absolute top-40 left-35 max-w-55 '> {currentLocale === 'tr'
+          ? 'Kütüphane uygulamasına hoşgeldin, çalışma odası tutabilir ya da var olan odalarını görebilirsin.'
+          : 'Welcome to the Library app, you can book a study room or check out the rooms you already have.'}</p>
     </main>
   )
 }

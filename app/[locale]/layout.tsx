@@ -7,6 +7,7 @@ import '../styles/Button.module.scss';
 import '../styles/globals.scss';
 
 
+
 export default function LocaleLayout({
   children,
   params
