@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Gün Sonu Raporu
 
-## Getting Started
+## Genel Bakış
 
-First, run the development server:
+Bugün projede birçok kritik altyapı ve kullanıcı deneyimi geliştirmesi tamamlandı. SCSS entegrasyonundan başlayarak, uluslararasılaştırma (i18n) sistemi, güvenli token yönetimi, backend-frontend tam uyumu ve performans odaklı rezervasyon sistemi geliştirmeleri gibi pek çok başlıkta ilerleme kaydedildi. Tüm bunlar, hem sürdürülebilir hem de ölçeklenebilir bir yapıya katkı sağladı.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Yapılan Detaylı Çalışmalar
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### SCSS ve Proje Yapılandırması
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Projeye SCSS desteği entegre edildi.  
+- Next.js ile uyumlu olacak şekilde derleme ve yapılandırma tamamlandı.  
+- Responsive ve modüler stiller için altyapı hazırlandı.
 
-## Learn More
+### Uluslararasılaştırma (i18n) ve Dil Desteği
 
-To learn more about Next.js, take a look at the following resources:
+- Next-Intl kullanılarak kapsamlı çoklu dil desteği sağlandı.  
+- Kullanıcı tarayıcı diline göre otomatik dil algılama (language detection) aktif edildi.  
+- SSR ve CSR için ayrı ayrı i18n konfigürasyonları yapıldı.  
+- Çoklu dil değişimi için pratik ve kullanıcı dostu bir Language Switcher bileşeni geliştirildi.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Yetkilendirme ve Token Yönetimi
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `js-cookie` kütüphanesi ile `accessToken` ve `refreshToken` güvenli ve standartlara uygun şekilde cookie’lerde saklanıyor.  
+- Tokenların secure, sameSite ve path ayarları özenle yapıldı.  
+- Kullanıcı oturumu (session) oluşturma, alma ve temizleme fonksiyonları Next.js server actions ile yönetiliyor.
 
-## Deploy on Vercel
+### API İletişimi ve State Yönetimi
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Axios tabanlı API istekleri için merkezi bir yapı kuruldu; her istek JWT token ile otomatik yetkilendiriliyor.  
+- Zustand ile kalıcı ve basit bir global auth state yönetimi oluşturuldu; kullanıcı bilgileri localStorage’a persist ediliyor.  
+- Reusable hooklar (örneğin `useAuth`, `useReservations`) ile kod tekrarı azaltıldı ve okunabilirlik artırıldı.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Backend CRUD İşlemleri & Rezervasyon Sistemi
+
+- Backend tarafındaki profil ve rezervasyon CRUD işlemleri tamamlandı.  
+- Frontend ile tam entegre edilerek kullanıcılar profil bilgilerini güncelleyip, rezervasyon yapabilir hale geldi.  
+- Rezervasyonlar, tarih ve oda bazında seçilip oluşturulabiliyor.  
+- Tarih aralığı seçimi `datetime-local` inputlarıyla sağlanıyor, inputlar ISO formatına çevrilerek backend’e gönderiliyor.  
+- Rezervasyon listesi, pagination desteği ile optimize edildi; böylece kullanıcı deneyimi ve performans arttı.
+
+### Middleware ve Erişim Kontrolleri
+
+- Korunan sayfalara (rezervasyon, profil vb.) erişim için middleware ile token kontrolü yapıldı.  
+- Yetkisiz kullanıcılar otomatik olarak login sayfasına yönlendiriliyor.  
+- Uluslararasılaştırma middleware’i ile dil bazlı yönlendirmeler kusursuz hale getirildi.
+
+---
+
+## Kullanıcı Deneyimi & Arayüz
+
+- Rezervasyon sayfası, seçilebilir oda kartları ile sezgisel hale getirildi.  
+- Seçilen oda görsel olarak vurgulanıyor ve kullanıcıya “Seçildi” bildirimi sunuluyor.  
+- Başlangıç ve bitiş tarihleri için kolay kullanımlı inputlar tasarlandı.  
+- Başarılı ve hata durumlarında kullanıcıya anlık bildirim (toast) sistemi ile geri dönüş sağlandı.  
+- Anasayfa butonu ile kullanıcı kolayca ana menüye dönebiliyor.
+
+---
+
+## Kısaca Özetlersek
+
+| Alan                      | Yapılan İşler                                       | Durum       |
+|---------------------------|----------------------------------------------------|-------------|
+| SCSS Entegrasyonu         | Modüler, responsive tasarım altyapısı hazırlandı  | Tamamlandı  |
+| Uluslararasılaştırma      | Next-Intl, dil algılama, SSR/CSR konfigürasyonu    | Tamamlandı  |
+| Yetkilendirme             | JWT token yönetimi, cookie güvenliği               | Tamamlandı  |
+| API & State Yönetimi      | Axios, Zustand tabanlı global state                 | Tamamlandı  |
+| Backend CRUD İşlemleri    | Profil, rezervasyon işlemleri                       | Tamamlandı  |
+| Rezervasyon Pagination    | Performans odaklı listeleme                         | Tamamlandı  |
+| Middleware Kontrolleri    | Token bazlı erişim koruması                         | Tamamlandı  |
+| UI/UX                     | Seçilebilir oda kartları, tarih inputları, bildirimler | Tamamlandı  |
+
+---
+
+## Sonuç
+
+Bugün atılan adımlarla, projenin hem teknik alt yapısı sağlamlaştırıldı hem de kullanıcı etkileşimi açısından önemli geliştirmeler yapıldı. Elde edilen yapı, ölçeklenebilir ve sürdürülebilir bir yol haritası oluşturdu. Bir sonraki aşamada, kullanıcı geri bildirimleri doğrultusunda tasarım iyileştirmeleri ve yeni özellik entegrasyonları planlanabilir.
+
+---
+
+Teşekkürler, iyi çalışmalar!  
