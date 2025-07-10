@@ -21,7 +21,7 @@ export default function MyButton({
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={`bg-cyan-800 hover:bg-cyan-950 text-white py-2 px-4 rounded shadow-md transition-all duration-200 font-extralight
+      className={`bg-cyan-800 hover:bg-cyan-950 text-white py-2 px-4 rounded-2xl shadow-md transition-all duration-200 font-extralight
         ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
       `}
     >
