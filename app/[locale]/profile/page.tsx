@@ -3,8 +3,10 @@
 import { useAuth } from '@/app/hooks/useAuth'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 export default function ProfilePage() {
+  const t = useTranslations('profile')
   const { user, logout } = useAuth()
   const router = useRouter()
 
@@ -25,8 +27,8 @@ export default function ProfilePage() {
   if (!user) {
     return (
       <div style={{ padding: '2rem' }}>
-        <h1>Profil Güncelleme</h1>
-        <p style={{ color: 'red' }}>💡 Giriş yapmanız gerekiyor.</p>
+        <h1>{t('updateProfile')}</h1>
+        <p style={{ color: 'red' }}>{t('mustLogin')}</p>
       </div>
     )
   }
@@ -60,12 +62,12 @@ export default function ProfilePage() {
       const data = await res.json()
 
       if (!res.ok) {
-        setMessage({ type: 'error', text: data.message || 'Bir hata oluştu' })
+        setMessage({ type: 'error', text: data.message || t('updateError') })
       } else {
-        setMessage({ type: 'success', text: 'Profil başarıyla güncellendi 💖' })
+        setMessage({ type: 'success', text: t('updateSuccess') })
       }
     } catch {
-      setMessage({ type: 'error', text: 'Sunucu hatası, tekrar dene aşkım' })
+      setMessage({ type: 'error', text: t('serverError') })
     }
   }
 
@@ -74,7 +76,7 @@ export default function ProfilePage() {
     setMessage(null)
 
     if (!passwordData.oldPassword || !passwordData.newPassword) {
-      setMessage({ type: 'error', text: 'Eski ve yeni parolayı doldurmalısın canım!' })
+      setMessage({ type: 'error', text: t('passwordMissing') })
       return
     }
 
@@ -91,18 +93,18 @@ export default function ProfilePage() {
       const data = await res.json()
 
       if (!res.ok) {
-        setMessage({ type: 'error', text: data.message || 'Şifre değiştirme hatası oldu' })
+        setMessage({ type: 'error', text: data.message || t('passwordChangeError') })
       } else {
-        setMessage({ type: 'success', text: 'Şifren başarıyla değişti 💫' })
+        setMessage({ type: 'success', text: t('passwordChangeSuccess') })
         setPasswordData({ oldPassword: '', newPassword: '' })
       }
     } catch {
-      setMessage({ type: 'error', text: 'Sunucu hatası, tekrar dene aşkım' })
+      setMessage({ type: 'error', text: t('serverError') })
     }
   }
 
   const handleDeleteAccount = async () => {
-    const onay = confirm('Aman dikkat! Hesabını silmek istediğine emin misin? Bu işlem geri alınamaz 💔')
+    const onay = confirm(t('deleteConfirm'))
     if (!onay) return
 
     try {
@@ -116,108 +118,123 @@ export default function ProfilePage() {
       const data = await res.json()
 
       if (!res.ok) {
-        setMessage({ type: 'error', text: data.message || 'Hesap silinemedi, tekrar dene.' })
+        setMessage({ type: 'error', text: data.message || t('deleteError') })
       } else {
-        setMessage({ type: 'success', text: 'Hesabın başarıyla silindi. Görüşürüz aşkım! 😢' })
+        setMessage({ type: 'success', text: t('deleteSuccess') })
         logout()
         router.push('/login')
       }
     } catch {
-      setMessage({ type: 'error', text: 'Sunucu hatası, tekrar dene aşkım' })
+      setMessage({ type: 'error', text: t('serverError') })
     }
   }
 
   return (
-    <div style={{ padding: '2rem', maxWidth: 500 }}>
-      <h1>Profil Güncelle</h1>
+    <main className='min-h-screen bg-gradient-to-br from-cyan-50 via-blue-50 to-indigo-100'>
+      <div className='top-10'>
+        <button
+          onClick={() => router.push('/dashboard')}
+          className=" bg-cyan-800 hover:bg-cyan-950 text-white py-2 px-4 rounded-2xl shadow-md transition-all duration-200 font-extralight"
+          style={{
+            cursor: 'pointer',
+          }}
+        >
+          <img src="/images/arrowleft.png" alt="" />
+        </button>
+      </div>
+      <div className='min-h-screen flex items-center justify-center'>
+        <div className=' bg-white backdrop-blur-sm : shadow-lg w-220 p-6 rounded-2xl pd'>
+      <table>
+          <td>
+            <img className='size-15 px-1 py-1 rounded-b-full shadow-md font-extralight' src="/images/profile.png" alt="" />
+        <h1 className='text-cyan-800'><strong>{t('updateProfile')}</strong></h1>
 
-      {message && (
-        <p style={{ color: message.type === 'error' ? 'crimson' : 'green', fontWeight: 500 }}>
-          {message.text}
-        </p>
-      )}
+        {message && (
+          <p style={{ color: message.type === 'error' ? 'crimson' : 'green', fontWeight: 500 }}>
+            {message.text}
+          </p>
+        )}
 
-      <form onSubmit={handleProfileSubmit} style={{ marginBottom: '2rem' }}>
-        <label>
-          İsim:<br />
-          <input name="name" value={profileData.name} onChange={handleProfileChange} />
-        </label><br />
+        <form onSubmit={handleProfileSubmit} style={{ marginBottom: '2rem' }}>
+          <label>
+            {t('name')}<br />
+            <input name="name" value={profileData.name} onChange={handleProfileChange}
+            className='w-100 mb-4 p-2 border border-cyan-800 rounded'
+            />
+          </label><br />
 
-        <label>
-          Soyisim:<br />
-          <input name="lastname" value={profileData.lastname} onChange={handleProfileChange} />
-        </label><br />
+          <label>
+            {t('lastname')}<br />
+            <input name="lastname" value={profileData.lastname} onChange={handleProfileChange}
+             className='w-100 mb-4 p-2 border border-cyan-800 rounded'
+            />
+          </label><br />
 
-        <label>
-          Email:<br />
-          <input name="email" value={profileData.email} onChange={handleProfileChange} />
-        </label><br />
+          <label>
+            {t('email')}<br />
+            <input name="email" value={profileData.email} onChange={handleProfileChange}
+             className='w-100 mb-4 p-2 border border-cyan-800 rounded'
+            />
+          </label><br />
 
-        <label>
-          Telefon:<br />
-          <input name="phone" value={profileData.phone} onChange={handleProfileChange} />
-        </label><br />
+          <label>
+            {t('phone')}<br />
+            <input name="phone" value={profileData.phone} onChange={handleProfileChange}
+             className='w-100 mb-4 p-2 border border-cyan-800 rounded'
+            />
+          </label><br />
 
-        <button type="submit" style={{ marginTop: '1rem' }}>Bilgilerimi Güncelle</button>
-      </form>
+          <button
+          className="w-full py-2 bg-cyan-800 hover:bg-cyan-950 text-white py-2 px-4 rounded-2xl shadow-md transition-all duration-200 font-extralight"
+          type="submit" style={{ marginTop: '1rem' }}>{t('submitUpdate')}</button>
+        </form>
+        </td>
+        <td>
+          <div className='p-8'>
+        <h2 className='text-cyan-800'><strong>{t('changePassword')}</strong></h2>
+        <form onSubmit={handlePasswordSubmit}>
+          <label>
+            {t('oldPassword')}<br />
+            <input
+              type="password"
+              name="oldPassword"
+              value={passwordData.oldPassword}
+              onChange={handlePasswordChange}
+               className='w-100 mb-4 p-2 border border-cyan-800 rounded'
+            />
+          </label><br />
 
-      <h2>Şifre Değiştir</h2>
-      <form onSubmit={handlePasswordSubmit}>
-        <label>
-          Eski Parola:<br />
-          <input
-            type="password"
-            name="oldPassword"
-            value={passwordData.oldPassword}
-            onChange={handlePasswordChange}
-          />
-        </label><br />
+          <label>
+            {t('newPassword')}<br />
+            <input
+              type="password"
+              name="newPassword"
+              value={passwordData.newPassword}
+              onChange={handlePasswordChange}
+               className='w-100 mb-4 p-2 border border-cyan-800 rounded'
+            />
+          </label><br />
 
-        <label>
-          Yeni Parola:<br />
-          <input
-            type="password"
-            name="newPassword"
-            value={passwordData.newPassword}
-            onChange={handlePasswordChange}
-          />
-        </label><br />
+          <button 
+          className="w-full py-2 bg-cyan-800 hover:bg-cyan-950 text-white py-2 px-4 rounded-2xl shadow-md transition-all duration-200 font-extralight"
+          type="submit" style={{ marginTop: '1rem' }}>{t('submitPassword')}</button>
+        <br /><br />
+        <button
+          onClick={handleDeleteAccount}
+          className='w-full py-2 bg-red-700 hover:bg-red-950 text-white py-2 px-4 rounded-2xl shadow-md transition-all duration-200 font-extralight'
+          style={{
+            cursor: 'pointer'
+          }}
+        >
+          {t('deleteAccount')}
+        </button>
 
-        <button type="submit" style={{ marginTop: '1rem' }}>Şifremi Değiştir</button>
-      </form>
-
-      <hr style={{ margin: '2rem 0' }} />
-
-      <button
-        onClick={handleDeleteAccount}
-        style={{
-          backgroundColor: 'crimson',
-          color: 'white',
-          padding: '0.8rem 1.2rem',
-          border: 'none',
-          borderRadius: 5,
-          cursor: 'pointer'
-        }}
-      >
-        Hesabımı Sil 🗑️
-      </button>
-
-      <hr style={{ margin: '2rem 0' }} />
-
-      <button
-        onClick={() => router.push('/dashboard')}
-        style={{
-          backgroundColor: '#6a0dad',
-          color: 'white',
-          padding: '0.8rem 1.2rem',
-          border: 'none',
-          borderRadius: 5,
-          cursor: 'pointer',
-          marginTop: '1rem'
-        }}
-      >
-        ⬅️ Anasayfaya Dön
-      </button>
-    </div>
+        </form>
+        </div>
+             </td>
+      </table>
+      </div>
+      </div>
+    </main>
   )
 }

@@ -29,7 +29,79 @@
   "goToReservations": "View My Reservations",
   "goToProfile": "Update My Profile",
   "loading": "Loading..."
-}
+},
+"profile": {
+    "updateProfile": "Update Profile",
+    "updateSuccess": "Profile updated successfully",
+    "updateError": "An error occurred",
+    "serverError": "Server error, please try again sweetie",
+    "changePassword": "Change Password",
+    "oldPassword": "Old Password",
+    "newPassword": "New Password",
+    "passwordMissing": "You must fill in both old and new password",
+    "passwordChangeSuccess": "Your password has been changed",
+    "passwordChangeError": "There was an error changing the password",
+    "deleteAccount": "Delete My Account",
+    "deleteConfirm": "Are you sure you want to delete your account? This action is irreversible",
+    "deleteSuccess": "Your account has been successfully deleted. See you later 😢",
+    "deleteError": "Could not delete account, try again",
+    "mustLogin": "You need to be logged in.",
+    "name": "Name",
+    "lastname": "Lastname",
+    "email": "Email",
+    "phone": "Phone",
+    "submitUpdate": "Update My Info",
+    "submitPassword": "Change My Password"
+  },
+  "myReservations": {
+    "loading": "Loading...",
+    "mustLogin": "You must be logged in",
+    "error": "Something went wrong",
+    "welcome": "Welcome {name}",
+    "fetching": "Fetching your reservations...",
+    "noReservations": "You have no reservations",
+    "roomId": "Room ID",
+    "start": "Start",
+    "end": "End",
+    "update": "Update",
+    "delete": "Delete",
+    "prev": "⬅ Previous",
+    "next": "Next ",
+    "backToHome": "⬅️ Back to Home",
+    "alert": {
+      "missingDates": "Start and end datetime are required",
+      "updated": "Updated successfully",
+      "updateFailed": "Update failed",
+      "deleted": "Deleted successfully",
+      "deleteFailed": "Delete failed"
+    },
+    "confirm": {
+      "delete": "Are you sure? This action cannot be undone"
+    }
+  },
+  "reserve": {
+    "title": "Make a Reservation",
+    "loading": "Loading...",
+    "mustLogin": "You must be logged in",
+    "noRooms": "No rooms found",
+    "selected": "Selected",
+    "start": "Start",
+    "end": "End",
+    "submit": "Reserve",
+    "backToHome": "Back to Home",
+     "roomInfo": "Room Information",
+     "noDescription": "No description available",
+     "status": "Status",
+     "capacity": "Capacity",
+  "location": "Location",
+    "toast": {
+      "fillAll": "Please fill in all fields",
+      "notLoggedIn": "You don't seem to be logged in",
+      "error": "Something went wrong",
+      "success": "Reservation completed successfully",
+      "serverError": "Cannot reach the server"
+    }
+  }
 }
 
 

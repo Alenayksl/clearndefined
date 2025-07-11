@@ -30,5 +30,78 @@
   "goToReservations": "Rezervasyonlarımı Gör",
   "goToProfile": "Profil Bilgilerimi Güncelle",
   "loading": "Yükleniyor..."
+  },
+  "profile": {
+    "updateProfile": "Profil Güncelle",
+    "updateSuccess": "Profil başarıyla güncellendi 💖",
+    "updateError": "Bir hata oluştu",
+    "serverError": "Sunucu hatası, tekrar dene aşkım",
+    "changePassword": "Şifre Değiştir",
+    "oldPassword": "Eski Parola",
+    "newPassword": "Yeni Parola",
+    "passwordMissing": "Eski ve yeni parolayı doldurmalısın canım!",
+    "passwordChangeSuccess": "Şifren başarıyla değişti",
+    "passwordChangeError": "Şifre değiştirme hatası oldu",
+    "deleteAccount": "Hesabımı Sil",
+    "deleteConfirm": "Aman dikkat! Hesabını silmek istediğine emin misin? Bu işlem geri alınamaz 💔",
+    "deleteSuccess": "Hesabın başarıyla silindi. Görüşürüz 😢",
+    "deleteError": "Hesap silinemedi, tekrar dene.",
+    "backToHome": "⬅️ Anasayfaya Dön",
+    "mustLogin": "💡 Giriş yapmanız gerekiyor.",
+    "name": "İsim",
+    "lastname": "Soyisim",
+    "email": "Email",
+    "phone": "Telefon",
+    "submitUpdate": "Bilgilerimi Güncelle",
+    "submitPassword": "Şifremi Değiştir"
+  },
+  "myReservations": {
+    "loading": "Yükleniyor...",
+    "mustLogin": "Giriş yapman gerekiyor",
+    "error": "Bir sorun oluştu",
+    "welcome": "Hoşgeldin {name}",
+    "fetching": "Rezervasyonların getiriliyor...",
+    "noReservations": "Hiç rezervasyonun yok",
+    "roomId": "Oda ID",
+    "start": "Başlangıç",
+    "end": "Bitiş",
+    "update": "Güncelle",
+    "delete": "Sil",
+    "prev": " Önceki",
+    "next": "Sonraki",
+    "backToHome": "⬅️ Anasayfaya Dön",
+    "alert": {
+      "missingDates": "Başlangıç ve bitiş zamanı gerekli",
+      "updated": "Güncellendi",
+      "updateFailed": "Güncelleme başarısız",
+      "deleted": "Silindi",
+      "deleteFailed": "Silme başarısız"
+    },
+    "confirm": {
+      "delete": "Emin misin? Silince geri dönüş yok"
+    }
+  },
+   "reserve": { 
+    "title": "Rezervasyon Yap",
+    "loading": "Yükleniyor...",
+    "mustLogin": "Giriş yapman gerekiyor",
+    "noRooms": "Hiç oda bulunamadı",
+    "selected": "Seçildi",
+    "start": "Başlangıç",
+    "end": "Bitiş",
+    "submit": "Rezerve Et",
+    "backToHome": "Anasayfaya Dön",
+    "roomInfo": "Oda Hakkında Bilgi",
+    "noDescription": "Açıklama bulunmuyor",
+    "status": "Durum",
+    "capacity": "Kapasite",
+  "location": "Konum",
+    "toast": {
+    "fillAll": "Tüm alanları doldurmalısın",
+    "notLoggedIn": "Giriş yapılmamış gibi görünüyorsun",
+    "error": "Bir şeyler ters gitti",
+    "success": "Rezervasyonun başarıyla yapıldı",
+    "serverError": "Sunucuya ulaşılamıyor"
+    }
   }
 }

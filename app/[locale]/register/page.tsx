@@ -60,41 +60,19 @@ export default function RegisterPage() {
   }
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-white px-4 relative">
-      {/* Dil Değiştirme Butonları */}
-      <div className="absolute top-4 right-4 flex gap-2">
-        <button
-          onClick={() => switchLocale('tr')}
-          className={`px-3 py-1 rounded ${
-            currentLocale === 'tr'
-              ? 'bg-pink-500 text-white'
-              : 'bg-white text-pink-500 border border-pink-500'
-          }`}
-        >
-          TR
-        </button>
-        <button
-          onClick={() => switchLocale('en')}
-          className={`px-3 py-1 rounded ${
-            currentLocale === 'en'
-              ? 'bg-purple-600 text-white'
-              : 'bg-white text-purple-600 border border-purple-600'
-          }`}
-        >
-          EN
-        </button>
-      </div>
-
-      <h1 className="text-2xl font-bold text-pink-600 mb-6">{t('title')}</h1>
-
+    <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-cyan-50 via-blue-50 to-indigo-100">
+<div className="p-6 bg-white backdrop-blur-sm : shadow-lg w-100 rounded-2xl">
       <div className="flex flex-col gap-3 w-full max-w-sm">
+
+<h1 className="text-cyan-950 flex items-center justify-center text-2xl font-semibold mb-4">{t('title')}</h1>
+
         <input
           name="name"
           type="text"
           placeholder={t('name')}
           value={form.name}
           onChange={handleChange}
-          className="border px-3 py-2 rounded"
+          className="w-full mb-4 p-2 border border-cyan-800 rounded"
         />
         <input
           name="lastname"
@@ -102,7 +80,7 @@ export default function RegisterPage() {
           placeholder={t('lastname')}
           value={form.lastname}
           onChange={handleChange}
-          className="border px-3 py-2 rounded"
+          className="w-full mb-4 p-2 border border-cyan-800 rounded"
         />
         <input
           name="email"
@@ -110,7 +88,7 @@ export default function RegisterPage() {
           placeholder={t('email')}
           value={form.email}
           onChange={handleChange}
-          className="border px-3 py-2 rounded"
+          className="w-full mb-4 p-2 border border-cyan-800 rounded"
         />
         <input
           name="password"
@@ -118,7 +96,7 @@ export default function RegisterPage() {
           placeholder={t('password')}
           value={form.password}
           onChange={handleChange}
-          className="border px-3 py-2 rounded"
+          className="w-full mb-4 p-2 border border-cyan-800 rounded"
         />
         <input
           name="phone"
@@ -126,7 +104,7 @@ export default function RegisterPage() {
           placeholder={t('phone')}
           value={form.phone}
           onChange={handleChange}
-          className="border px-3 py-2 rounded"
+          className="w-full mb-4 p-2 border border-cyan-800 rounded"
         />
         <input
           name="image"
@@ -134,16 +112,17 @@ export default function RegisterPage() {
           placeholder={t('image')}
           value={form.image}
           onChange={handleChange}
-          className="border px-3 py-2 rounded"
+          className="w-full mb-4 p-2 border border-cyan-800 rounded"
         />
         <button
           onClick={handleRegister}
           disabled={isLoading}
-          className="bg-purple-500 text-white py-2 rounded hover:bg-purple-600 transition"
+          className="w-full py-2 bg-cyan-800 hover:bg-cyan-950 text-white py-2 px-4 rounded-2xl shadow-md transition-all duration-200 font-extralight"
         >
           {isLoading ? t('loading') : t('button')}
         </button>
-        {error && <p className="text-red-500 text-sm">{error}</p>}
+        {error && <p className="text-cyan-950 text-sm">{error}</p>}
+      </div>
       </div>
     </main>
   )

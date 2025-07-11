@@ -36,30 +36,30 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <div className="p-6 bg-white rounded shadow w-full max-w-md">
-        <h2 className="text-2xl font-semibold mb-4">{t('title')}</h2>
+      <div className="p-6 bg-white backdrop-blur-sm : shadow-lg max-w-md rounded-2xl">
+        <h2 className="text-cyan-950 flex items-center justify-center text-2xl font-semibold mb-4">{t('title')}</h2>
         <input
           type="email"
-          className="w-full mb-4 p-2 border rounded"
+          className="w-full mb-4 p-2 border border-cyan-800 rounded"
           placeholder={t('email')}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
           type="password"
-          className="w-full mb-4 p-2 border rounded"
+          className="w-full mb-4 p-2 border  border-cyan-800 rounded"
           placeholder={t('password')}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
         <button
-          className="w-full py-2 bg-blue-600 text-white rounded disabled:opacity-50"
+          className="w-full py-2 bg-cyan-800 hover:bg-cyan-950 text-white py-2 px-4 rounded-2xl shadow-md transition-all duration-200 font-extralight"
           onClick={handleLogin}
           disabled={loading}
         >
           {loading ? t('loading') : t('button')}
         </button>
-        {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
+        {error && <p className="mt-3 text-sm text-cyan-950">{error}</p>}
       </div>
     </div>
   )

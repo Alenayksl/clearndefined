@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useTranslations } from 'next-intl'
 import { useAuth } from '@/app/hooks/useAuth'
 import { toast } from 'sonner'
@@ -14,12 +14,14 @@ export default function ReservePage() {
   const [selectedRoom, setSelectedRoom] = useState<number | null>(null)
   const [start, setStart] = useState('')
   const [end, setEnd] = useState('')
+  const [infoOpenId, setInfoOpenId] = useState<number | null>(null)
+  const infoRef = useRef<HTMLDivElement | null>(null)
   const router = useRouter()
 
   useEffect(() => {
     const fetchRooms = async () => {
       try {
-        const res = await fetch('http://localhost:3001/rooms') 
+        const res = await fetch('http://localhost:3001/rooms')
         const data = await res.json()
         if (Array.isArray(data.rooms)) {
           setRooms(data.rooms)
@@ -34,8 +36,18 @@ export default function ReservePage() {
     fetchRooms()
   }, [])
 
-  if (loading) return <div>Yükleniyor aşkım... 🌸</div>
-  if (!user) return <div>Giriş yapman gerekiyor aşkım 💔</div>
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (infoRef.current && !infoRef.current.contains(e.target as Node)) {
+        setInfoOpenId(null)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+  if (loading) return <div>{t('loading')}</div>
+  if (!user) return <div>{t('mustLogin')}</div>
 
   const toISOStringWithSeconds = (dtLocal: string) => {
     return new Date(dtLocal).toISOString()
@@ -43,13 +55,13 @@ export default function ReservePage() {
 
   const handleSubmit = async () => {
     if (!selectedRoom || !start || !end) {
-      toast.error('Tüm alanları doldur aşkım 💔')
+      toast.error(t('toast.fillAll'))
       return
     }
 
     const token = getAccessToken()
     if (!token) {
-      toast.error('Giriş yapılmamış gibi görünüyorsun şekerim 💅🏻')
+      toast.error(t('toast.notLoggedIn'))
       return
     }
 
@@ -70,80 +82,106 @@ export default function ReservePage() {
       const data = await res.json()
 
       if (!res.ok) {
-        toast.error(data.message || 'Bir şeyler ters gitti 😢')
+        toast.error(data.message || t('toast.error'))
         return
       }
 
-      toast.success('Rezervasyonun başarıyla yapıldı balım 💅🏻')
+      toast.success(t('toast.success'))
       setSelectedRoom(null)
       setStart('')
       setEnd('')
     } catch {
-      toast.error('Sunucuya ulaşılamıyor 😵')
+      toast.error(t('toast.serverError'))
     }
   }
 
   return (
-    <div className="p-6">
-      <h1 className="text-xl font-semibold mb-4">{t('title')}</h1>
+    <main className="min-h-screen bg-gradient-to-br from-cyan-50 via-blue-50 to-indigo-100">
+      <div className="p-6">
+         <button
+          onClick={() => router.push('/dashboard')}
+          className=" bg-cyan-800 hover:bg-cyan-950 text-white py-2 px-4 rounded-2xl shadow-md transition-all duration-200 font-extralight"
+        >
+          <img src="/images/arrowleft.png" alt="" />
+        </button>
+        <h1 className="text-xl font-semibold mb-4 text-cyan-800">{t('title')}</h1>
 
-      {rooms.length === 0 ? (
-        <p className="text-sm text-gray-500">{t('noRooms')}</p>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-          {rooms.map((room) => (
-            <div
-              key={room.id}
-              className={`p-4 border rounded-xl cursor-pointer transition ${
-                selectedRoom === room.id ? 'border-blue-500 bg-blue-50' : ''
-              }`}
-              onClick={() => setSelectedRoom(room.id)}
-            >
-              <p className="font-medium">{room.name}</p>
-              <p className="text-xs text-gray-500">{room.description || room.status}</p>
-              {selectedRoom === room.id && (
-                <p className="text-xs text-blue-600 mt-2">Seçildi 💖</p>
-              )}
-            </div>
-          ))}
+        {rooms.length === 0 ? (
+          <p className="text-sm text-gray-500">{t('noRooms')}</p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+            {rooms.map((room) => (
+              <div
+                key={room.id}
+                className={`bg-neutral-50/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:bg-sky-50 -translate-y-2  ${
+                  selectedRoom === room.id ? 'border-blue-500 bg-blue-50' : ''
+                }`}
+                onClick={() => setSelectedRoom(room.id)}
+              >
+                <p className="font-medium text-cyan-800">{(room.name)}</p>
+                <p className="text-xs text-gray-500">{room.description || room.status}</p>
+                 
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    setInfoOpenId(infoOpenId === room.id ? null : room.id)
+                  }}
+                  className="mt-2 text-sm text-cyan-800 underline hover:text-cyan-950"
+                >
+                  {t('roomInfo')}
+                </button>
+
+                {infoOpenId === room.id && (
+                  <div
+                    ref={infoRef}
+                    className="absolute top-14 left-0 z-10 w-64 bg-white border border-gray-300 shadow-lg rounded-lg p-3 text-sm"
+                  >
+                    <p className="font-semibold mb-1">{room.name}</p>
+                    <p>{room.description || t('noDescription')}</p>
+                    <p className="text-gray-500 mt-1">
+                      {t('status')}: {room.status}
+                    </p>
+                  </div>
+                )}
+
+                {selectedRoom === room.id && (
+                  <p className="text-xs text-cyan-900 mt-2">{t('selected')}</p>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+
+        <div className="flex flex-col gap-2 mb-4">
+          <label>
+            {t('start')}:
+            <input
+              type="datetime-local"
+              value={start}
+              onChange={(e) => setStart(e.target.value)}
+              className="block w-full border p-2 rounded"
+            />
+          </label>
+          <label>
+            {t('end')}:
+            <input
+              type="datetime-local"
+              value={end}
+              onChange={(e) => setEnd(e.target.value)}
+              className="block w-full border p-2 rounded"
+            />
+          </label>
         </div>
-      )}
-
-      <div className="flex flex-col gap-2 mb-4">
-        <label>
-          Başlangıç:
-          <input
-            type="datetime-local"
-            value={start}
-            onChange={(e) => setStart(e.target.value)}
-            className="block w-full border p-2 rounded"
-          />
-        </label>
-        <label>
-          Bitiş:
-          <input
-            type="datetime-local"
-            value={end}
-            onChange={(e) => setEnd(e.target.value)}
-            className="block w-full border p-2 rounded"
-          />
-        </label>
+<div className='flex items-center justify-center'>
+        <button
+          onClick={handleSubmit}
+          className="w-md py-2 bg-cyan-800 hover:bg-cyan-950 text-white py-2 px-4 rounded-2xl shadow-md transition-all duration-200 font-extralight"
+        >
+          {t('submit')}
+        </button>
+        </div>
       </div>
-
-      <button
-        onClick={handleSubmit}
-        className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition"
-      >
-        Rezerve Et
-      </button>
-
-      {/* 🏠 Anasayfa butonu */}
-      <button
-        onClick={() => router.push('/dashboard')}
-        className="mt-6 bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded transition"
-      >
-        🏡 Anasayfaya Dön
-      </button>
-    </div>
+    </main>
   )
 }
