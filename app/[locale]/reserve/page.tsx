@@ -46,6 +46,19 @@ export default function ReservePage() {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
+  useEffect(() => {
+    if (start) {
+      const startDate = new Date(start)
+      const year = startDate.getFullYear()
+      const month = String(startDate.getMonth() + 1).padStart(2, '0')
+      const day = String(startDate.getDate()).padStart(2, '0')
+      const hour = String(startDate.getHours()).padStart(2, '0')
+      const minute = String(startDate.getMinutes()).padStart(2, '0')
+      const localISO = `${year}-${month}-${day}T${hour}:${minute}`
+      setEnd(localISO)
+    }
+  }, [start])
+
   if (loading) return <div>{t('loading')}</div>
   if (!user) return <div>{t('mustLogin')}</div>
 
@@ -98,7 +111,7 @@ export default function ReservePage() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-cyan-50 via-blue-50 to-indigo-100">
       <div className="p-6">
-         <button
+        <button
           onClick={() => router.push('/dashboard')}
           className=" bg-cyan-800 hover:bg-cyan-950 text-white py-2 px-4 rounded-2xl shadow-md transition-all duration-200 font-extralight"
         >
@@ -118,9 +131,9 @@ export default function ReservePage() {
                 }`}
                 onClick={() => setSelectedRoom(room.id)}
               >
-                <p className="font-medium text-cyan-800">{(room.name)}</p>
+                <p className="font-medium text-cyan-800">{room.name}</p>
                 <p className="text-xs text-gray-500">{room.description || room.status}</p>
-                 
+
                 <button
                   type="button"
                   onClick={(e) => {
@@ -163,23 +176,34 @@ export default function ReservePage() {
               className="block w-full border p-2 rounded"
             />
           </label>
+
           <label>
             {t('end')}:
             <input
               type="datetime-local"
               value={end}
-              onChange={(e) => setEnd(e.target.value)}
+              onChange={(e) => {
+                if (start && e.target.value.includes('T')) {
+                  const [startDate] = start.split('T')
+                  const [, timePart] = e.target.value.split('T')
+                  const newEnd = `${startDate}T${timePart}`
+                  setEnd(newEnd)
+                }
+              }}
+              min={start ? start.slice(0, 10) + 'T00:00' : undefined}
+              max={start ? start.slice(0, 10) + 'T23:59' : undefined}
               className="block w-full border p-2 rounded"
             />
           </label>
         </div>
-<div className='flex items-center justify-center'>
-        <button
-          onClick={handleSubmit}
-          className="w-md py-2 bg-cyan-800 hover:bg-cyan-950 text-white py-2 px-4 rounded-2xl shadow-md transition-all duration-200 font-extralight"
-        >
-          {t('submit')}
-        </button>
+
+        <div className="flex items-center justify-center">
+          <button
+            onClick={handleSubmit}
+            className="w-md py-2 bg-cyan-800 hover:bg-cyan-950 text-white py-2 px-4 rounded-2xl shadow-md transition-all duration-200 font-extralight"
+          >
+            {t('submit')}
+          </button>
         </div>
       </div>
     </main>

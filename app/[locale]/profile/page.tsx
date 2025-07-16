@@ -145,7 +145,7 @@ export default function ProfilePage() {
       <div className='min-h-screen flex items-center justify-center'>
         <div className=' bg-white backdrop-blur-sm : shadow-lg w-220 p-6 rounded-2xl pd'>
       <table>
-          <td>
+         
             <img className='size-15 px-1 py-1 rounded-b-full shadow-md font-extralight' src="/images/profile.png" alt="" />
         <h1 className='text-cyan-800'><strong>{t('updateProfile')}</strong></h1>
 
@@ -188,8 +188,8 @@ export default function ProfilePage() {
           className="w-full py-2 bg-cyan-800 hover:bg-cyan-950 text-white py-2 px-4 rounded-2xl shadow-md transition-all duration-200 font-extralight"
           type="submit" style={{ marginTop: '1rem' }}>{t('submitUpdate')}</button>
         </form>
-        </td>
-        <td>
+        
+       
           <div className='p-8'>
         <h2 className='text-cyan-800'><strong>{t('changePassword')}</strong></h2>
         <form onSubmit={handlePasswordSubmit}>
@@ -231,7 +231,7 @@ export default function ProfilePage() {
 
         </form>
         </div>
-             </td>
+             
       </table>
       </div>
       </div>
