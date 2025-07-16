@@ -2,6 +2,7 @@
 
 import { useRouter, useParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
+import Image from 'next/image'
 import MyButton from '../components/MyButton';
 
 
@@ -23,11 +24,12 @@ export default function HomePage() {
         <div className="absolute top-0 left-5">
           <a href="#" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
-            <img
-              alt=""
-              src="/images/books.png"
-              className="h-8 w-auto"
-            />
+            <Image
+                  src={"/images/books.png"}
+                  alt=''
+                  width={30}
+                  height={30}
+                  />
           </a>
         </div>
 
@@ -46,12 +48,14 @@ export default function HomePage() {
           </div>
           <button
             onClick={() => switchLocale('tr')}
+             style={{ cursor: 'pointer' }}
             className={`px-3 py-1 rounded-2xl shadow-md font-extralight ${currentLocale === 'tr' ? 'bg-cyan-800 text-white' : 'bg-white text-cyan-800'}`}
           >
             TR
           </button>
           <button
             onClick={() => switchLocale('en')}
+             style={{ cursor: 'pointer' }}
             className={`px-3 py-1 rounded-2xl shadow-md font-extralight ${currentLocale === 'en' ? 'bg-cyan-800 text-white' : 'bg-white text-cyan-800'}`}
           >
             EN

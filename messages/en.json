@@ -65,9 +65,9 @@
     "end": "End",
     "update": "Update",
     "delete": "Delete",
-    "prev": "⬅ Previous",
+    "prev": "Previous",
     "next": "Next ",
-    "backToHome": "⬅️ Back to Home",
+    "backToHome": "Back to Home",
     "alert": {
       "missingDates": "Start and end datetime are required",
       "updated": "Updated successfully",

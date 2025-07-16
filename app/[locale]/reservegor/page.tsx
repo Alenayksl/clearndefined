@@ -5,7 +5,12 @@ import { usePaginatedReservations } from '@/app/hooks/usePaginatedReservations'
 import { useReservationActions } from '@/app/hooks/useReservationActions'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
+import type { Room } from '@/app/types/room'
+import type { Reservation } from '@/app/types/reservation'
+import Image from 'next/image'
+
+
 
 function formatToLocalDateTime(dateString: string) {
   const dt = new Date(dateString)
@@ -19,13 +24,39 @@ function formatToLocalDateTime(dateString: string) {
 
 export default function MyReservationsPage() {
   const t = useTranslations('myReservations')
+  const locale = useLocale()
   const { user, loading } = useAuth()
   const [page, setPage] = useState(1)
   const { reservations, isLoading, isError } = usePaginatedReservations(user?.id || 0, page, 5)
   const { updateReservation, deleteReservation } = useReservationActions()
   const [form, setForm] = useState<{ [id: number]: { start: string; end: string } }>({})
   const [visibleOptions, setVisibleOptions] = useState<{ [id: number]: boolean }>({})
+  const [rooms, setRooms] = useState<Room[]>([])
   const router = useRouter()
+
+  useEffect(() => {
+    const fetchRooms = async () => {
+      try {
+        const res = await fetch(`http://localhost:3001/rooms?lang=${locale}`)
+        const data = await res.json()
+        if (Array.isArray(data.rooms)) {
+          setRooms(data.rooms)
+        } else {
+          setRooms([])
+        }
+      } catch (err) {
+        console.error(err)
+        setRooms([])
+      }
+    }
+
+    fetchRooms()
+  }, [locale])
+
+  const getRoomName = (id: number) => {
+    const room = rooms.find((r) => r.id === id)
+    return room ? room.name : `Room ${id}`
+  }
 
   useEffect(() => {
     Object.entries(form).forEach(([id, times]) => {
@@ -37,8 +68,8 @@ export default function MyReservationsPage() {
         const month = String(startDate.getMonth() + 1).padStart(2, '0')
         const day = String(startDate.getDate()).padStart(2, '0')
 
-        let endHour = endDate ? String(endDate.getHours()).padStart(2, '0') : String(startDate.getHours()).padStart(2, '0')
-        let endMinute = endDate ? String(endDate.getMinutes()).padStart(2, '0') : String(startDate.getMinutes()).padStart(2, '0')
+        const endHour = endDate ? String(endDate.getHours()).padStart(2, '0') : String(startDate.getHours()).padStart(2, '0')
+        const endMinute = endDate ? String(endDate.getMinutes()).padStart(2, '0') : String(startDate.getMinutes()).padStart(2, '0')
 
         const newEnd = `${year}-${month}-${day}T${endHour}:${endMinute}`
 
@@ -111,7 +142,7 @@ export default function MyReservationsPage() {
       [id]: !prev[id],
     }))
     if (!form[id]) {
-      const reservation = reservations.find(r => r.id === id)
+      const reservation = reservations.find((r: Reservation) => r.id === id)
       if (reservation) {
         setForm((prev) => ({
           ...prev,
@@ -129,14 +160,20 @@ export default function MyReservationsPage() {
   if (isError) return <div>{t('error')}</div>
 
   return (
-    <main className="bg-gradient-to-br from-cyan-50 via-blue-50 to-indigo-100">
+    <main className="min-h-screen bg-gradient-to-br from-cyan-50 via-blue-50 to-indigo-100">
       <div className="p-6">
         <h1 className="text-xl font-semibold mb-4">
           <button
             onClick={() => router.push('/dashboard')}
             className="bg-cyan-800 hover:bg-cyan-950 text-white py-2 px-4 rounded-2xl shadow-md transition-all duration-200 font-extralight"
+             style={{ cursor: 'pointer' }}
           >
-            <img src="/images/arrowleft.png" alt="" />
+           <Image 
+  src="/images/arrowleft.png"
+  alt=""
+  width={15}
+  height={5}
+  />
           </button>
         </h1>
         {isLoading ? (
@@ -145,20 +182,26 @@ export default function MyReservationsPage() {
           <p>{t('noReservations')}</p>
         ) : (
           <ul className="space-y-3">
-            {reservations.map((r: any) => (
+            {reservations.map((r: Reservation) => (
               <li
                 key={r.id}
                 className="space-y-1 bg-neutral-50/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 relative"
               >
-                <p>{t('roomId')}: {r.room_id}</p>
+               <p className="text-cyan-800 font-medium">{getRoomName(r.room_id)}</p>
                 <p>{t('start')}: {new Date(r.start_datetime).toLocaleString()}</p>
                 <p>{t('end')}: {new Date(r.end_datetime).toLocaleString()}</p>
                 <div className='absolute right-2 top-6'>
                   <button
                     onClick={() => toggleOptions(r.id)}
                     className="mt-2 text-sm text-cyan-800 underline hover:text-cyan-950"
+                     style={{ cursor: 'pointer' }}
                   >
-                    <img className='w-7 h-7' src="/images/settings.png" alt="" />
+                    <Image 
+  src="/images/settings.png"
+  alt=""
+  width={25}
+  height={25}
+  />
                   </button>
                 </div>
                 {visibleOptions[r.id] && (
@@ -205,12 +248,14 @@ export default function MyReservationsPage() {
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               className="bg-cyan-800 hover:bg-cyan-950 text-white py-2 px-4 rounded-2xl shadow-md transition-all duration-200 font-extralight"
               disabled={page === 1}
+               style={{ cursor: 'pointer' }}
             >
               {t('prev')}
             </button>
             <button
               onClick={() => setPage((p) => p + 1)}
               className="bg-cyan-800 hover:bg-cyan-950 text-white py-2 px-4 rounded-2xl shadow-md transition-all duration-200 font-extralight"
+               style={{ cursor: 'pointer' }}
             >
               {t('next')}
             </button>

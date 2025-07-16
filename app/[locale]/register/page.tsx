@@ -25,13 +25,7 @@ export default function RegisterPage() {
     const { name, value } = e.target
     setForm((prev) => ({ ...prev, [name]: value }))
   }
-
-  const switchLocale = (newLocale: string) => {
-    if (newLocale !== currentLocale) {
-      router.push(`/${newLocale}/register`)
-    }
-  }
-
+  
   const handleRegister = async () => {
     setIsLoading(true)
     setError(null)
@@ -117,7 +111,8 @@ export default function RegisterPage() {
         <button
           onClick={handleRegister}
           disabled={isLoading}
-          className="w-full py-2 bg-cyan-800 hover:bg-cyan-950 text-white py-2 px-4 rounded-2xl shadow-md transition-all duration-200 font-extralight"
+          className="w-full bg-cyan-800 hover:bg-cyan-950 text-white py-2 px-4 rounded-2xl shadow-md transition-all duration-200 font-extralight"
+           style={{ cursor: 'pointer' }}
         >
           {isLoading ? t('loading') : t('button')}
         </button>

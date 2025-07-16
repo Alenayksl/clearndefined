@@ -1,16 +1,19 @@
 'use client'
 
 import { useEffect, useState, useRef } from 'react'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { useAuth } from '@/app/hooks/useAuth'
 import { toast } from 'sonner'
 import { getAccessToken } from '@/app/utils/cookies'
 import { useRouter } from 'next/navigation'
+import { Room } from '@/app/types/room'
+import Image from 'next/image'
 
 export default function ReservePage() {
   const t = useTranslations('reserve')
+  const locale = useLocale() // 🌍 aktif dil bilgisi buradan alınıyor
   const { user, loading } = useAuth()
-  const [rooms, setRooms] = useState<any[]>([])
+  const [rooms, setRooms] = useState<Room[]>([])
   const [selectedRoom, setSelectedRoom] = useState<number | null>(null)
   const [start, setStart] = useState('')
   const [end, setEnd] = useState('')
@@ -21,7 +24,7 @@ export default function ReservePage() {
   useEffect(() => {
     const fetchRooms = async () => {
       try {
-        const res = await fetch('http://localhost:3001/rooms')
+        const res = await fetch(`http://localhost:3001/rooms?lang=${locale}`)
         const data = await res.json()
         if (Array.isArray(data.rooms)) {
           setRooms(data.rooms)
@@ -34,7 +37,7 @@ export default function ReservePage() {
       }
     }
     fetchRooms()
-  }, [])
+  }, [locale])
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -113,9 +116,15 @@ export default function ReservePage() {
       <div className="p-6">
         <button
           onClick={() => router.push('/dashboard')}
-          className=" bg-cyan-800 hover:bg-cyan-950 text-white py-2 px-4 rounded-2xl shadow-md transition-all duration-200 font-extralight"
+          className="bg-cyan-800 hover:bg-cyan-950 text-white py-2 px-4 rounded-2xl shadow-md transition-all duration-200 font-extralight"
+           style={{ cursor: 'pointer' }}
         >
-          <img src="/images/arrowleft.png" alt="" />
+         <Image 
+           src="/images/arrowleft.png"
+           alt=""
+           width={15}
+           height={5}
+           />
         </button>
         <h1 className="text-xl font-semibold mb-4 text-cyan-800">{t('title')}</h1>
 
@@ -126,7 +135,7 @@ export default function ReservePage() {
             {rooms.map((room) => (
               <div
                 key={room.id}
-                className={`bg-neutral-50/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:bg-sky-50 -translate-y-2  ${
+                className={`bg-neutral-50/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:bg-sky-50 -translate-y-2 ${
                   selectedRoom === room.id ? 'border-blue-500 bg-blue-50' : ''
                 }`}
                 onClick={() => setSelectedRoom(room.id)}
@@ -174,6 +183,7 @@ export default function ReservePage() {
               value={start}
               onChange={(e) => setStart(e.target.value)}
               className="block w-full border p-2 rounded"
+               style={{ cursor: 'pointer' }}
             />
           </label>
 
@@ -193,6 +203,7 @@ export default function ReservePage() {
               min={start ? start.slice(0, 10) + 'T00:00' : undefined}
               max={start ? start.slice(0, 10) + 'T23:59' : undefined}
               className="block w-full border p-2 rounded"
+               style={{ cursor: 'pointer' }}
             />
           </label>
         </div>
@@ -200,7 +211,8 @@ export default function ReservePage() {
         <div className="flex items-center justify-center">
           <button
             onClick={handleSubmit}
-            className="w-md py-2 bg-cyan-800 hover:bg-cyan-950 text-white py-2 px-4 rounded-2xl shadow-md transition-all duration-200 font-extralight"
+            className="w-md bg-cyan-800 hover:bg-cyan-950 text-white py-2 px-4 rounded-2xl shadow-md transition-all duration-200 font-extralight"
+             style={{ cursor: 'pointer' }}
           >
             {t('submit')}
           </button>

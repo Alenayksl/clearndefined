@@ -4,6 +4,7 @@ import { useAuth } from '@/app/hooks/useAuth'
 import { removeTokens } from '@/app/utils/cookies'
 import { useRouter, usePathname } from 'next/navigation'
 import { useTranslations } from 'next-intl'
+import Image from 'next/image'
 
 export default function DashboardPage() {
   const { user, logout } = useAuth()
@@ -48,6 +49,7 @@ export default function DashboardPage() {
       <div style={{ position: 'absolute', top: '1rem', right: '1rem', display: 'flex', gap: '0.5rem' }}>
         <button
           onClick={() => switchLocale('tr')}
+           style={{ cursor: 'pointer' }}
           className={`px-3 py-1 rounded-2xl shadow-md font-extralight ${
             currentLocale === 'tr' ? 'bg-cyan-800 text-white' : 'bg-white text-cyan-800'
           }`}
@@ -56,6 +58,7 @@ export default function DashboardPage() {
         </button>
         <button
           onClick={() => switchLocale('en')}
+           style={{ cursor: 'pointer' }}
           className={`px-3 py-1 rounded-2xl shadow-md font-extralight ${
             currentLocale === 'en' ? 'bg-cyan-800 text-white' : 'bg-white text-cyan-800'
           }`}
@@ -65,11 +68,22 @@ export default function DashboardPage() {
       </div>
 
     <div className='size-15 px-1 py-1 rounded-b-full shadow-md font-extralight'>
-      <img src="/images/profile.png" alt="" />
+      <Image
+      src={"/images/profile.png"}
+      alt=''
+      width={100}
+      height={100}
+      />
+     
       </div> 
 
       <div className='size-6 absolute bottom-4 right-5'>
-        <img src="/images/books.png" alt="" />
+        <Image
+      src={"/images/books.png"}
+      alt=''
+      width={30}
+      height={30}
+      />
       </div>
 
       <h1 className='text-cyan-800' > {t('welcome', { name: user.name })}</h1>
@@ -124,7 +138,8 @@ export default function DashboardPage() {
             </div>
           </div>
            <div style={{ position: 'absolute', bottom: '2rem' }}>
-        <button className="w-full py-2 bg-cyan-800 hover:bg-cyan-950 text-white px-4 rounded-2xl shadow-md transition-all duration-200 font-extralight" onClick={handleLogout}>
+        <button className="w-full py-2 bg-cyan-800 hover:bg-cyan-950 text-white px-4 rounded-2xl shadow-md transition-all duration-200 font-extralight" onClick={handleLogout}
+         style={{ cursor: 'pointer' }}>
           {t('logout')}
         </button>
       </div>

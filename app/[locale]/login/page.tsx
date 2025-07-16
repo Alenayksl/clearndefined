@@ -7,6 +7,7 @@ import { api } from '@/app/lib/api'
 import { API_ENDPOINTS } from '@/app/constants/endpoints'
 import { useAuthStore } from '@/app/stores/authStore'
 import { setAccessToken, setRefreshToken } from '@/app/utils/cookies'
+import { AxiosError } from 'axios'
 
 export default function LoginPage() {
   const t = useTranslations('login')
@@ -27,12 +28,13 @@ export default function LoginPage() {
       setRefreshToken(refreshToken)
       setUser(user)
       router.push(`/${locale}/dashboard`)
-    } catch (err: any) {
-      setError(err?.response?.data?.message || t('error'))
-    } finally {
-      setLoading(false)
-    }
+    } catch (err) {
+     const error = err as AxiosError<{ message: string }>
+    setError(error.response?.data?.message || t('error'))
+  } finally {
+    setLoading(false)
   }
+}
 
   return (
     <div className="min-h-screen flex items-center justify-center">
@@ -53,7 +55,8 @@ export default function LoginPage() {
           onChange={(e) => setPassword(e.target.value)}
         />
         <button
-          className="w-full py-2 bg-cyan-800 hover:bg-cyan-950 text-white py-2 px-4 rounded-2xl shadow-md transition-all duration-200 font-extralight"
+          className="w-full bg-cyan-800 hover:bg-cyan-950 text-white py-2 px-4 rounded-2xl shadow-md transition-all duration-200 font-extralight"
+           style={{ cursor: 'pointer' }}
           onClick={handleLogin}
           disabled={loading}
         >

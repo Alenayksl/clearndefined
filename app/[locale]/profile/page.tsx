@@ -4,6 +4,7 @@ import { useAuth } from '@/app/hooks/useAuth'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
+import Image from 'next/image'
 
 export default function ProfilePage() {
   const t = useTranslations('profile')
@@ -134,106 +135,147 @@ export default function ProfilePage() {
       <div className='top-10'>
         <button
           onClick={() => router.push('/dashboard')}
-          className=" bg-cyan-800 hover:bg-cyan-950 text-white py-2 px-4 rounded-2xl shadow-md transition-all duration-200 font-extralight"
-          style={{
-            cursor: 'pointer',
-          }}
+          className="bg-cyan-800 hover:bg-cyan-950 text-white py-2 px-4 rounded-2xl shadow-md transition-all duration-200 font-extralight"
+          style={{ cursor: 'pointer' }}
         >
-          <img src="/images/arrowleft.png" alt="" />
+           <Image 
+            src="/images/arrowleft.png"
+            alt=""
+            width={15}
+            height={5}
+            />
         </button>
       </div>
       <div className='min-h-screen flex items-center justify-center'>
-        <div className=' bg-white backdrop-blur-sm : shadow-lg w-220 p-6 rounded-2xl pd'>
-      <table>
-         
-            <img className='size-15 px-1 py-1 rounded-b-full shadow-md font-extralight' src="/images/profile.png" alt="" />
-        <h1 className='text-cyan-800'><strong>{t('updateProfile')}</strong></h1>
+        <div className='bg-white backdrop-blur-sm shadow-lg w-206 p-10 rounded-2xl pd'>
 
-        {message && (
-          <p style={{ color: message.type === 'error' ? 'crimson' : 'green', fontWeight: 500 }}>
-            {message.text}
-          </p>
-        )}
+          <div className="flex flex-col md:flex-row items-start justify-between gap-10">
 
-        <form onSubmit={handleProfileSubmit} style={{ marginBottom: '2rem' }}>
-          <label>
-            {t('name')}<br />
-            <input name="name" value={profileData.name} onChange={handleProfileChange}
-            className='w-100 mb-4 p-2 border border-cyan-800 rounded'
-            />
-          </label><br />
+            {/* Sol sütun - Profil */}
+            <div className="flex flex-col" style={{ minWidth: '350px' }}>
+              {/* Resim ve başlık yan yana, aynı hizada */}
+              <div style={{marginBottom: '1rem' }}>
+                <Image
+                     src={"/images/profile.png"}
+                     alt=''
+                     width={100}
+                     height={100}
+                     />
+                <h1 className='text-cyan-800 mb-1.5'><strong>{t('updateProfile')}</strong></h1>
+              </div>
 
-          <label>
-            {t('lastname')}<br />
-            <input name="lastname" value={profileData.lastname} onChange={handleProfileChange}
-             className='w-100 mb-4 p-2 border border-cyan-800 rounded'
-            />
-          </label><br />
+              {message && (
+                <p style={{ color: message.type === 'error' ? 'crimson' : 'green', fontWeight: 500 }}>
+                  {message.text}
+                </p>
+              )}
 
-          <label>
-            {t('email')}<br />
-            <input name="email" value={profileData.email} onChange={handleProfileChange}
-             className='w-100 mb-4 p-2 border border-cyan-800 rounded'
-            />
-          </label><br />
+              <form onSubmit={handleProfileSubmit} style={{ marginBottom: '2rem' }}>
+                <label>
+                  {t('name')}<br />
+                  <input
+                    name="name"
+                    value={profileData.name}
+                    onChange={handleProfileChange}
+                    className='w-100 mb-4 p-2 border border-cyan-800 rounded'
+                    style={{ width: '100%' }}
+                  />
+                </label>
+                <br/>
+                <label>
+                  {t('lastname')}<br />
+                  <input
+                    name="lastname"
+                    value={profileData.lastname}
+                    onChange={handleProfileChange}
+                    className='w-100 mb-4 p-2 border border-cyan-800 rounded'
+                    style={{ width: '100%' }}
+                  />
+                </label><br />
 
-          <label>
-            {t('phone')}<br />
-            <input name="phone" value={profileData.phone} onChange={handleProfileChange}
-             className='w-100 mb-4 p-2 border border-cyan-800 rounded'
-            />
-          </label><br />
+                <label>
+                  {t('email')}<br />
+                  <input
+                    name="email"
+                    value={profileData.email}
+                    onChange={handleProfileChange}
+                    className='w-100 mb-4 p-2 border border-cyan-800 rounded'
+                    style={{ width: '100%' }}
+                  />
+                </label><br />
 
-          <button
-          className="w-full py-2 bg-cyan-800 hover:bg-cyan-950 text-white py-2 px-4 rounded-2xl shadow-md transition-all duration-200 font-extralight"
-          type="submit" style={{ marginTop: '1rem' }}>{t('submitUpdate')}</button>
-        </form>
-        
-       
-          <div className='p-8'>
-        <h2 className='text-cyan-800'><strong>{t('changePassword')}</strong></h2>
-        <form onSubmit={handlePasswordSubmit}>
-          <label>
-            {t('oldPassword')}<br />
-            <input
-              type="password"
-              name="oldPassword"
-              value={passwordData.oldPassword}
-              onChange={handlePasswordChange}
-               className='w-100 mb-4 p-2 border border-cyan-800 rounded'
-            />
-          </label><br />
+                <label>
+                  {t('phone')}<br />
+                  <input
+                    name="phone"
+                    value={profileData.phone}
+                    onChange={handleProfileChange}
+                    className='w-100 mb-4 p-2 border border-cyan-800 rounded'
+                    style={{ width: '100%' }}
+                  />
+                </label><br />
 
-          <label>
-            {t('newPassword')}<br />
-            <input
-              type="password"
-              name="newPassword"
-              value={passwordData.newPassword}
-              onChange={handlePasswordChange}
-               className='w-100 mb-4 p-2 border border-cyan-800 rounded'
-            />
-          </label><br />
+                <button
+                  className="w-full py-2 bg-cyan-800 hover:bg-cyan-950 text-white rounded-2xl shadow-md transition-all duration-200 font-extralight"
+                  type="submit"
+                  style={{ marginTop: '1rem', cursor:'pointer' }}
+              
+                >
+                  {t('submitUpdate')}
+                </button>
+              </form>
+            </div>
 
-          <button 
-          className="w-full py-2 bg-cyan-800 hover:bg-cyan-950 text-white py-2 px-4 rounded-2xl shadow-md transition-all duration-200 font-extralight"
-          type="submit" style={{ marginTop: '1rem' }}>{t('submitPassword')}</button>
-        <br /><br />
-        <button
-          onClick={handleDeleteAccount}
-          className='w-full py-2 bg-red-700 hover:bg-red-950 text-white py-2 px-4 rounded-2xl shadow-md transition-all duration-200 font-extralight'
-          style={{
-            cursor: 'pointer'
-          }}
-        >
-          {t('deleteAccount')}
-        </button>
+            {/* Sağ sütun - Şifre değişikliği */}
+            <div className="p-8" style={{ minWidth: '390px' , marginTop: '2rem'}}>
+              <h2 className='text-cyan-800 mb-4'><strong>{t('changePassword')}</strong></h2>
+              <form onSubmit={handlePasswordSubmit}>
+                <label>
+                  {t('oldPassword')}<br />
+                  <input
+                    type="password"
+                    name="oldPassword"
+                    value={passwordData.oldPassword}
+                    onChange={handlePasswordChange}
+                    className='w-100 mb-4 p-2 border border-cyan-800 rounded'
+                    style={{ width: '100%' }}
+                  />
+                </label><br />
 
-        </form>
+                <label>
+                  {t('newPassword')}<br />
+                  <input
+                    type="password"
+                    name="newPassword"
+                    value={passwordData.newPassword}
+                    onChange={handlePasswordChange}
+                    className='w-100 mb-4 p-2 border border-cyan-800 rounded'
+                    style={{ width: '100%' }}
+                  />
+                </label><br />
+
+                <button
+                  className="w-full py-2 bg-cyan-800 hover:bg-cyan-950 text-white rounded-2xl shadow-md transition-all duration-200 font-extralight"
+                  type="submit"
+                  style={{ marginTop: '1rem' , cursor: 'pointer'}}
+                >
+                  {t('submitPassword')}
+                </button>
+
+                <br /><br />
+
+                <button
+                  onClick={handleDeleteAccount}
+                  className='w-full py-2 bg-red-700 hover:bg-red-950 text-white rounded-2xl shadow-md transition-all duration-200 font-extralight'
+                  style={{ cursor: 'pointer' }}
+                >
+                  {t('deleteAccount')}
+                </button>
+              </form>
+            </div>
+
+          </div>
         </div>
-             
-      </table>
-      </div>
       </div>
     </main>
   )
