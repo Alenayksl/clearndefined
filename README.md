@@ -28,19 +28,25 @@ NEXT_PUBLIC_API_URL=http://localhost:3001/api
 # 🚀 Kurulum
 Bu repoyu klonlayın:
 
+```
 git clone https://github.com/Alenayksl/LibraryReservationApp.git
 cd LibraryReservationApp
-
+```
 Gerekli bağımlılıkları yükleyin:
+
+```
 npm install
-
+```
 .env.local dosyasını oluşturun ve aşağıdaki içeriği ekleyin:
-env
+
+```
 NEXT_PUBLIC_API_URL=http://localhost:3001/api
-
+```
 Geliştirme sunucusunu başlatın:
-npm run dev
 
+```
+npm run dev
+```
 # 🌍 Uluslararasılaştırma (i18n)
 Proje, next-intl kütüphanesi ile çoklu dil desteği sağlamaktadır. Desteklenen diller:
 
