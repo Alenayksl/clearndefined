@@ -1,11 +1,11 @@
-import { create } from 'zustand'
-import { persist, createJSONStorage } from 'zustand/middleware'
-import { User } from '@/app/types/user'
+import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
+import { User } from "@/app/types/user";
 
 interface AuthState {
-  user: User | null
-  setUser: (user: User) => void
-  clearUser: () => void
+  user: User | null;
+  setUser: (user: User) => void;
+  clearUser: () => void;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -16,11 +16,11 @@ export const useAuthStore = create<AuthState>()(
       clearUser: () => set({ user: null }),
     }),
     {
-      name: 'auth-storage',
+      name: "auth-storage",
       storage:
-        typeof window !== 'undefined'
+        typeof window !== "undefined"
           ? createJSONStorage(() => localStorage)
           : undefined,
     }
   )
-)
+);

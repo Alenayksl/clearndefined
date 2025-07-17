@@ -1,24 +1,22 @@
-import { ReactNode } from 'react'
-import { NextIntlClientProvider, useMessages, hasLocale } from 'next-intl'
-import { notFound } from 'next/navigation'
-import { locales } from '../i18n'
-import '../../app/globals.css'
-import '../styles/Button.module.scss';
-import '../styles/globals.scss';
-
-
+import { ReactNode } from "react";
+import { NextIntlClientProvider, useMessages, hasLocale } from "next-intl";
+import { notFound } from "next/navigation";
+import { locales } from "../i18n";
+import "../../app/globals.css";
+import "../styles/Button.module.scss";
+import "../styles/globals.scss";
 
 export default function LocaleLayout({
   children,
-  params
+  params,
 }: {
-  children: ReactNode
-  params: { locale: string }
+  children: ReactNode;
+  params: { locale: string };
 }) {
-  const { locale } = params
-  if (!hasLocale(locales, locale)) notFound()
+  const { locale } = params;
+  if (!hasLocale(locales, locale)) notFound();
 
-  const messages = useMessages()
+  const messages = useMessages();
 
   return (
     <html lang={locale}>
@@ -28,5 +26,5 @@ export default function LocaleLayout({
         </NextIntlClientProvider>
       </body>
     </html>
-  )
+  );
 }
