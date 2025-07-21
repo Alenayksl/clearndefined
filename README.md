@@ -126,4 +126,15 @@ Token bulunmuyorsa kullanıcı giriş sayfasına yönlendirilir.
 📄 package.json          → Bağımlılıklar ve script'ler  
 📄 tsconfig.json         → TypeScript yapılandırması  
 
-Hazırlayan: Aleyna Yüksel
+# 🖼️ Sayfa Görünümleri
+
+![Login Sayfası](./public/assets/login.jpg)
+![Home Sayfası](./public/assets/register.jpg)
+![Home Sayfası](./public/assets/home.jpg)
+![Giriş yapıldıktan sonraki Home Page](./public/assets/dashboard.jpg)
+![Rezervasyon Yapma Sayfası](./public/assets/reserve.jpg)
+![Mevcut Rezervasyonlar Sayfası](./public/assets/reservegor.jpg)
+![Settings butonu ile rezervasyonu update veya silme](./public/assets/reserveupdate.jpg)
+![Profil Düzenleme](./public/assets/profile.jpg)
+
+# Hazırlayan: Aleyna Yüksel
