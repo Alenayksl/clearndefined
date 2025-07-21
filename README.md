@@ -126,4 +126,4 @@ Token bulunmuyorsa kullanıcı giriş sayfasına yönlendirilir.
 📄 package.json          → Bağımlılıklar ve script'ler  
 📄 tsconfig.json         → TypeScript yapılandırması  
 
-Hazırlayan: Aleyna Yüksel
+Hazırlayan: Aleyna Yüksel.
